@@ -1,3 +1,9 @@
+dpa-ext-gnomekeyring (0.1.1) UNRELEASED; urgency=medium
+
+  * 调整构建依赖
+
+ -- gfdgd_xi <3025613752@qq.com>  Fri, 06 Feb 2026 20:01:36 +0800
+
 dpa-ext-gnomekeyring (0.1.0-1+stable) unstable; urgency=low
 
   * ['Autobuild release-candidate: 5819ba7e2ae8db548f61492392990e0f438801d1']

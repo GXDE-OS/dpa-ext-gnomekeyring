@@ -1,0 +1,40 @@
+# Maintainer: CharOfString <root@charofstring.cc>
+pkgname=dpa-ext-gnomekeyring-git
+pkgver=0.1.1
+pkgrel=1
+pkgdesc='GXDE polkit agent extension that unlocks the GNOME keyring'
+arch=('x86_64' 'aarch64')
+url="https://github.com/GXDE-OS/dpa-ext-gnomekeyring"
+license=('GPL-3.0-or-later')
+depends=('libgnome-keyring-git' 'qt5-base' 'glib2' 'libgcc' 'libstdc++' 'glibc')
+# 构建需要 gxde-polkit-agent 的插件头文件 ・ Building needs gxde-polkit-agent's plugin headers.
+makedepends=('git' 'qt5-tools' 'gxde-polkit-agent-git')
+provides=('dpa-ext-gnomekeyring' 'deepin-polkit-agent-ext-gnomekeyring')
+conflicts=('dpa-ext-gnomekeyring' 'deepin-polkit-agent-ext-gnomekeyring')
+source=()
+sha512sums=()
+
+# 直接使用 PKGBUILD 所在的 git 仓库作为源码 ・ Build from the git checkout this PKGBUILD lives in.
+_srcroot() {
+  git -C "$startdir" rev-parse --show-toplevel
+}
+
+build() {
+  # translate_generation.sh 按当前目录查找 translations/*.ts，影子构建时找不到，先在源码目录生成 .qm
+  # translate_generation.sh looks for translations/*.ts in the current
+  # directory, which a shadow build lacks, so generate the .qm files in the
+  # source tree first.
+  export PATH="/usr/lib/qt/bin:$PATH"
+  (cd "$(_srcroot)" && bash translate_generation.sh)
+  mkdir -p build
+  cd build
+  qmake-qt5 "$(_srcroot)/dpa-ext-gnomekeyring.pro" \
+    QMAKE_CFLAGS_RELEASE="$CFLAGS" \
+    QMAKE_CXXFLAGS_RELEASE="$CXXFLAGS" \
+    QMAKE_LFLAGS_RELEASE="$LDFLAGS"
+  make
+}
+
+package() {
+  make -C build INSTALL_ROOT="$pkgdir" install
+}

@@ -1,16 +1,17 @@
 # Maintainer: CharOfString <root@charofstring.cc>
-pkgname=dpa-ext-gnomekeyring-git
+pkgname=dpa-ext-gnomekeyring
 pkgver=0.1.1
 pkgrel=1
 pkgdesc='GXDE polkit agent extension that unlocks the GNOME keyring'
 arch=('x86_64' 'aarch64')
 url="https://github.com/GXDE-OS/dpa-ext-gnomekeyring"
 license=('GPL-3.0-or-later')
-depends=('libgnome-keyring-git' 'qt5-base' 'glib2' 'libgcc' 'libstdc++' 'glibc')
+depends=('libgnome-keyring' 'qt5-base' 'glib2' 'libgcc' 'libstdc++' 'glibc')
 # 构建需要 gxde-polkit-agent 的插件头文件 ・ Building needs gxde-polkit-agent's plugin headers.
-makedepends=('git' 'qt5-tools' 'gxde-polkit-agent-git')
-provides=('dpa-ext-gnomekeyring' 'deepin-polkit-agent-ext-gnomekeyring')
-conflicts=('dpa-ext-gnomekeyring' 'deepin-polkit-agent-ext-gnomekeyring')
+makedepends=('git' 'qt5-tools' 'gxde-polkit-agent')
+provides=('deepin-polkit-agent-ext-gnomekeyring' "dpa-ext-gnomekeyring-git=$pkgver")
+conflicts=('deepin-polkit-agent-ext-gnomekeyring' 'dpa-ext-gnomekeyring-git')
+replaces=('dpa-ext-gnomekeyring-git')
 source=()
 sha512sums=()
 
